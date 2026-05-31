@@ -3,6 +3,7 @@ package de.whs.makerspace.security;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.http.HttpMethod;
 import org.springframework.security.config.annotation.method.configuration.EnableMethodSecurity;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.http.SessionCreationPolicy;
@@ -34,7 +35,7 @@ public class SecurityConfig {
 
         configuration.setAllowedOrigins(List.of(
                 "http://localhost:4200",
-                "https://makerspace-frontend.vercel.app"
+                "https://*.vercel.app"
         ));
 
         configuration.setAllowedMethods(List.of(
@@ -82,6 +83,8 @@ public class SecurityConfig {
                         .requestMatchers("/api/reservations/*/reject").hasAnyRole("ADMIN", "STAFF")
 
                         .requestMatchers("/api/reservations/**").authenticated()
+
+                        .requestMatchers(HttpMethod.OPTIONS, "/**").permitAll()
 
                         .anyRequest().authenticated()
                 )
