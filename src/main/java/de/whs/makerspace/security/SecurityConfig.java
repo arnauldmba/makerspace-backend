@@ -33,7 +33,8 @@ public class SecurityConfig {
         CorsConfiguration configuration = new CorsConfiguration();
 
         configuration.setAllowedOrigins(List.of(
-                "http://localhost:4200"
+                "http://localhost:4200",
+                "https://makerspace-frontend.vercel.app"
         ));
 
         configuration.setAllowedMethods(List.of(
@@ -62,7 +63,8 @@ public class SecurityConfig {
             throws Exception {
 
         http
-                .cors(cors -> {})
+                //.cors(cors -> {})
+                .cors(cors -> cors.configurationSource(corsConfigurationSource()))
                 .csrf(csrf -> csrf.disable())
                 .sessionManagement(session ->
                         session.sessionCreationPolicy(SessionCreationPolicy.STATELESS)
